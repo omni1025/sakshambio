@@ -1,1 +1,2467 @@
+<!--
+Saksham Biosurgical Services - Single-file website (index.html)
+Instructions:
+ - Put your images in a folder named `images/` next to this file.
+ - Replace images/photo1.jpg ... photo5.jpg and images/logo.png with your real files.
+ - Open this file in a browser or host on GitHub Pages (push to a repo and enable Pages).
 
+This is a single-page app that behaves like multiple pages using hash navigation (#about, #products, etc.).
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Saksham Biosurgical Services</title>
+  <style>
+    :root{
+      --accent:#0066a1;
+      --muted:#666;
+      --card-bg:#fff;
+      --bg:#f6f8fb;
+      --max-width:1100px;
+      --header-height:76px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#222}
+    a{color:inherit;text-decoration:none}
+
+    /* Header */
+    header{background:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 6px rgba(20,20,40,0.06)}
+    /* Gap between fixed header and content */
+    section {
+    margin-top: 100px; /* adjust to your liking */
+    }
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 18px}
+    .topbar{
+       position: fixed;
+       top: 0;
+       left: 0;
+       right: 0;
+       background: white;
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       padding: 10px 30px;
+       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+       z-index: 1000;
+      
+    }        
+    /* Logo + Name + Tagline */
+   .logo-container {
+       display: flex;
+       align-items: center;
+       gap: 0; /*   No gap between logo and text */
+   }
+   .logo {
+       height: 60px;
+       width: 60px;
+       object-fit: contain;
+   }
+   .brand-text {
+       display: flex;
+       flex-direction: column;
+       line-height: 1.2;
+   }
+
+   .company-name {
+       margin: 0;
+       font-size: 26px;
+       font-weight: bold;
+       color: #2E86C1; /* Blue company name 2E86C1 */   /* red background #FF0000*/
+   }
+
+   .tagline {
+       margin: 0;
+       font-size: 14px;
+       color: #666;
+   }
+   /* Menu */
+   .menu {
+       display: flex;
+       gap: 15px;
+   }
+
+   .menu a {
+       text-decoration: none;
+       color: #333;
+       font-weight: 600;
+       padding: 6px 10px;
+       border-radius: 4px;
+       transition: background 0.3s, color 0.3s;
+   }
+
+   .menu a:hover {
+       background: #f0f8ff; /* Light blue background */
+       color: #3399FF; /* Blue text on hover */
+   }
+   
+    
+
+    /* Hero / Slider */
+    .hero{margin-top:18px}
+    .slider{height:500px;
+            max-width:var(--max-width);
+            margin:0 auto;
+            border-radius:12px;
+            overflow:hidden;
+            position:relative;
+            background:#000;
+            aspect-ratio: 16 / 9;
+           }
+    .slide{position:absolute;
+           inset:0;
+           display:flex;
+           align-items:center;
+           justify-content:center}
+    .slide img{width:100%;
+               height:100%;
+               object-fit:contain;
+               background-color:#000;
+               display:block}
+
+    /* Fade-in-out box animation using staggered animation delays */
+    .slide{opacity:0;transform:scale(1.02);}
+    .slide:nth-child(1){animation:fadeBox 35s infinite;animation-delay:0s}
+    .slide:nth-child(2){animation:fadeBox 35s infinite;animation-delay:5s}
+    .slide:nth-child(3){animation:fadeBox 35s infinite;animation-delay:10s}
+    .slide:nth-child(4){animation:fadeBox 35s infinite;animation-delay:15s}
+    .slide:nth-child(5){animation:fadeBox 35s infinite;animation-delay:20s}
+
+    @keyframes fadeBox{
+      0%{opacity:0;transform:scale(1.05)}
+      4%{opacity:1;transform:scale(1)}
+      20%{opacity:1}
+      24%{opacity:0;transform:scale(0.98)}
+      100%{opacity:0}
+    }
+
+    /* Cards */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px auto;max-width:var(--max-width);padding:0 18px}
+    .card{background:var(--card-bg);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(20,30,60,0.06);min-height:140px}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted)}
+   /* About Us Section */
+.about-section {
+    max-width: var(--max-width);
+    margin: 40px auto; /* Gap from the top */
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    margin-top: 0;
+    color: #0077b6; /* Pleasant biomedical blue */
+    font-size: 28px;
+}
+
+.about-text p {
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.about-image {
+    width: 1000px;
+    flex-shrink: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Mobile Responsive Layout */
+@media(max-width:900px) {
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .about-image {
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+
+
+    /* About / two-column */
+    .about-section{max-width:var(--max-width);margin:22px auto;background:#fff;border-radius:12px;padding:20px;display:flex;gap:20px;align-items:center}
+    .about-text{flex:1}
+    .about-text h2{margin-top:0}
+    .about-text p{color:var(--muted);line-height:1.5}
+    .about-image{width:360px;flex-shrink:0}
+    .about-image img{width:100%;border-radius:10px;height:240px;object-fit:cover}
+    .highlight-company {color: #0077b6; /* Pleasant biomedical blue */font-weight: bold;}
+   
+   
+   /* Dropdown container */
+.dropdown {position: relative;display: flex;vertical-align: middle;align-items: center;}
+
+/* Dropdown button (Products) */
+.dropbtn {text-decoration: none;color: #333;font-weight: 600;padding: 6px 10px;border-radius: 4px;transition: background 0.3s, color 0.3s;}
+
+/* Hover effect for button */
+.dropbtn:hover {background: #f0f8ff; /* Light blue */ color: #3399FF;}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 250px;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+/* Dropdown links */
+.dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {  
+ background-color: #f0f8ff;
+    color: #3399FF;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+   
+ /* Layout: images on left, list on right */
+.products-layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 30px;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+/* Right side product list */
+.products-list {
+  flex: 0 0 250px;
+  width: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;      /* Light gray border */
+  border-radius: 10px;         /* Curved corners */
+  background: #fff;            /* White background inside */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.products-list h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #0066a1;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.products-list a {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.products-list a:hover {
+  background: #f0f8ff;
+  color: #0066a1;
+  font-weight: 600;
+}
+
+/* Right: Image gallery */
+.products-image {
+  flex: 1; /* take remaining width */
+}
+
+.product-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-gallery img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.product-gallery img:hover {
+  transform: scale(1.1);
+}
+   @media (max-width: 900px) {
+  .products-layout {
+    flex-direction: column;
+  }
+  .products-list {
+    width: 100%;
+  }
+  .products-image {
+    width: 100%;
+  }
+}
+.products-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Left column (list) */
+.products-list {
+  flex: 0 0 240px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.products-list h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #0066a1;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.products-list a {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.products-list a:hover {
+  background: #f0f8ff;
+  color: #0066a1;
+  font-weight: 600;
+}
+
+/* Right column (images) */
+.products-image {
+  flex: 1;
+}
+
+.product-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-gallery img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.product-gallery img:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .products-layout {
+    flex-direction: column;
+  }
+  .products-list {
+    width: 100%;
+  }
+}
+
+
+/* Network Page */
+.network-section {
+  background: #fff;
+  margin-top: 100px;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.network-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.network-text {
+  flex: 1;
+}
+
+.network-text h2 {
+  color: #0066a1;
+  margin-top: 0;
+}
+
+.network-text ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/* Clients */
+.clients {
+  margin-top: 40px;
+}
+
+.client-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.client-card {
+  flex: 1 1 200px;
+  background: #f0f8ff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  color: #0066a1;
+  transition: transform 0.3s;
+}
+
+.client-card:hover {
+  transform: scale(1.05);
+  background: #e6f4ff;
+}
+
+   /* Clients with logos */
+.client-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.client-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  flex: 1 1 180px;
+  max-width: 220px;
+  text-align: center;
+}
+
+.client-card img {
+  max-width: 100%;
+  height: 80px;
+  object-fit: contain;
+}
+
+.client-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Mobile */
+@media(max-width: 900px){
+  .network-layout {
+    flex-direction: column;
+  }
+  .network-image img {
+    max-width: 100%;
+  }
+}
+ .register-wrapper {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin-top: 60px;
+}
+
+.register-form {
+  flex: 2;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.register-form h1 {
+  color: #0066a1;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.register-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.register-form input,
+.register-form textarea,
+ .register-form select{
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.register-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #0066a1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-form button:hover {
+  background: #004d73;
+}
+
+/* Product list styling */
+.product-list {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-list h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #0066a1;
+  margin-bottom: 15px;
+}
+
+.product-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-list li {
+  margin: 10px 0;
+}
+
+.product-list a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  padding: 6px 10px;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.product-list a:hover {
+  background: #f0f8ff;
+  color: #0066a1;
+}
+
+   
+.career-section {
+  display: flex;
+  gap: 30px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  align-items: flex-start;
+}
+
+.career-text {
+  flex: 2;
+}
+
+.career-text h2 {
+  color: #0066a1; /* biomedical blue */
+  margin-top: 0;
+}
+
+.career-text ul {
+  padding-left: 20px;
+}
+
+.career-text form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.career-text input, 
+.career-text textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.career-text button {
+  background: #0066a1;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.career-text button:hover {
+  background: #004d78;
+}
+
+.career-image {
+  flex: 1;
+}
+
+.career-image img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+/* Product list styling */
+.product-list {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-list h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #0066a1;
+  margin-bottom: 15px;
+}
+
+.product-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-list li {
+  margin: 10px 0;
+}
+
+.product-list a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  padding: 6px 10px;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.product-list a:hover {
+  background: #f0f8ff;
+  color: #0066a1;
+}
+@media (max-width: 900px) {
+  .career-section {
+    flex-direction: column;
+  }
+}
+
+
+   /* Inquiry Section */
+.inquiry-section {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  align-items: flex-start;
+}
+
+.inquiry-text {
+  flex: 1;
+}
+
+.inquiry-text h2 {
+  color: #0077cc; /* Biomedical blue */
+  margin-bottom: 10px;
+}
+
+.inquiry-text p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.inquiry-text form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inquiry-text label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.inquiry-text input,
+.inquiry-text textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.inquiry-text button {
+  background: #0077cc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.inquiry-text button:hover {
+  background: #005fa3;
+}
+
+.inquiry-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inquiry-image img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+   /* Form Success & Error Messages */
+.form-message {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+}
+
+.form-message.success {
+  display: block;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  display: block;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+
+   /* Product list styling */
+.product-list {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-list h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #0066a1;
+  margin-bottom: 15px;
+}
+
+.product-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-list li {
+  margin: 10px 0;
+}
+
+.product-list a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  padding: 6px 10px;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.product-list a:hover {
+  background: #f0f8ff;
+  color: #0066a1;
+}
+/* Mobile view */
+@media (max-width: 900px) {
+  .inquiry-section {
+    flex-direction: column;
+  }
+  .inquiry-image img {
+    max-width: 100%;
+  }
+}
+
+
+   /* Contact Section Layout */
+.contact-section {
+  display: flex;
+  gap: 30px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-info li {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.contact-form {
+  flex: 1;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.contact-form button {
+  background: #0066a1;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #004d80;
+}
+
+/* Form Success & Error */
+.form-message {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+}
+
+.form-message.success {
+  display: block;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  display: block;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .contact-section {
+    flex-direction: column;
+  }
+}
+
+
+   /* MGPS Section */
+.mgps-section {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-top: 20px;
+}
+
+.mgps-text {
+  flex: 1;
+}
+
+.mgps-text h1 {
+  font-size: 28px;
+  color: #0066a1; /* Biomedical blue */
+  margin-bottom: 15px;
+}
+
+.mgps-text p, 
+.mgps-text ul {
+  color: #444;
+  line-height: 1.6;
+}
+
+.mgps-text ul {
+  margin: 15px 0;
+  padding-left: 18px;
+}
+
+.mgps-text ul li {
+  margin-bottom: 8px;
+}
+
+.mgps-text .btn {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.mgps-image {
+  flex: 1;
+  max-width: 450px;
+}
+
+.mgps-image img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+   .or-cards {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.or-card {
+  flex: 1;
+  min-width: 280px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.or-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+.or-card h3 {
+  margin-top: 0;
+  color: #0066a1; /* Biomedical blue */
+}
+
+.or-card p {
+  color: #444;
+  line-height: 1.6;
+}
+.or-card .icon {
+  font-size: 32px;
+  color: #0066a1; /* biomedical blue */
+  margin-bottom: 10px;
+}
+
+
+  /* Reliable Section */
+.reliable-section {
+  margin: 40px auto;
+  background: #fff;       /* White background like About */
+  border-radius: 12px;
+  padding: 20px 0;
+}
+
+.reliable-content {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.reliable-image {
+  flex: 1;
+}
+.reliable-image img {
+  width: 100%;
+  height: 400px;
+  max-width: 420px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.reliable-text {
+  flex: 1;
+}
+.reliable-text h2 {
+  margin-top: 0;
+  color: #0066a1; /* Biomedical Blue */
+}
+.reliable-text p {
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Client Cards */
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+.client-card {
+  background: #f6f8fb;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.client-card:hover {
+  background: #e9f5ff;
+  transform: translateY(-5px);
+}
+.section-heading {
+  position: relative;
+  padding-left: 70px;  /* space for line */
+  color: #222;
+}
+
+.section-heading::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 60px;
+  height: 3px;
+  background: #0066a1;  /* blue line */
+  transform: translateY(-50%);
+}
+
+
+   .installation-section {
+  background: #fff;
+  padding: 50px 20px;
+  border: 1px solid #ccc;     /* Thin gray border */
+  border-radius: 10px;        /* Smooth rounded corners */
+  max-width: 1100px;
+  margin: 40px auto;          /* spacing from other sections */
+}
+
+.installation-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.installation-text {
+  flex: 1;
+}
+
+.installation-text h2 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  color: #005b96; /* Biomedical blue */
+}
+
+.installation-text h3 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.installation-text p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.installation-image {
+  flex: 1;
+  text-align: right;
+}
+
+.installation-image img {
+  width: 100%;
+  max-width: 480px;  /* slightly smaller */
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+   /* Piping Installation Section */
+.piping-section {
+  background: #fff;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin: 30px auto;
+  max-width: 1100px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.piping-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.piping-image {
+  flex: 1;
+}
+
+.piping-image img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.piping-text {
+  flex: 2;
+}
+
+.piping-text h2 {
+  font-size: 28px;
+  margin: 0 0 10px;
+  color: #005b96; /* Biomedical Blue */
+}
+
+.piping-text h3 {
+  font-size: 20px;
+  margin: 0 0 12px;
+  color: #333;
+}
+
+.piping-text p {
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 14px;
+}
+
+
+
+#critical-care .container {
+  max-width: var(--max-width);
+  margin: 40px auto;
+  background: #fff;
+  text-align: center;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+#critical-care h2 {
+  color: #0066a1;
+  margin-bottom: 8px;
+  taxt-align: center;
+}
+
+#critical-care .intro {
+  max-width: 900px;
+  margin: 0 auto 30px;
+  text-align: center;
+  font-size: 16px;   /* Increased from 15px/16px */
+  line-height: 1.7;  /* Better readability */
+  color: #444;       /* Softer dark color */ 
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.equip-card {
+  text-align: center;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #fdfefe;
+}
+
+.equip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.equip-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.equip-card h3 {
+  margin: 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.btn-sm {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #0066a1;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.btn-sm:hover {
+  background: #004d80;
+}
+
+
+   /* Section Layout */
+#physio-equipment .container {
+  max-width: var(--max-width);
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Heading with Blue Underline */
+#physio-equipment h2 {
+  font-size: 28px;
+  color: #0066a1;
+  margin: 0 auto 8px;
+  text-align: center;
+}
+#physio-equipment .blue-underline {
+  width: 60px;
+  height: 3px;
+  background: #0066a1;
+  margin: 8px auto 20px;
+  border-radius: 2px;
+}
+
+/* Intro Text */
+.intro-text {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+/* Equipment Grid */
+.physio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+/* Individual Card Design */
+.physio-card {
+  background: #fdfefe;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.physio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.physio-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.physio-card h3 {
+  margin: 12px 0 8px;
+  color: #333;
+  font-size: 18px;
+}
+
+.physio-card p {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.btn-sm {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #0066a1;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.btn-sm:hover {
+  background: #004d80;
+}
+
+
+    /* Section Layout */
+#ot-equipment .container {
+  max-width: var(--max-width);
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Heading with Blue Underline */
+#ot-equipment h2 {
+  font-size: 28px;
+  color: #0066a1;
+  margin: 0 auto 8px;
+  text-align: center;
+}
+#ot-equipment .blue-underline {
+  width: 60px;
+  height: 3px;
+  background: #0066a1;
+  margin: 8px auto 20px;
+  border-radius: 2px;
+}
+
+/* Intro Text */
+.intro-text {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+/* Equipment Grid */
+.ot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+/* Individual Card Design */
+.ot-card {
+  background: #fdfefe;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.ot-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.ot-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.ot-card h3 {
+  margin: 12px 0 8px;
+  color: #333;
+  font-size: 18px;
+}
+
+.ot-card p {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.btn-sm {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #0066a1;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.btn-sm:hover {
+  background: #004d80;
+}
+
+
+    /* Footer */
+    footer{margin-top:26px;background:#0b1b2b;color:#ddd;padding:22px 0}
+    .footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;gap:20px;align-items:flex-start;justify-content:space-between;padding:0 18px}
+    .footer-left{flex:1}
+    .footer-col{margin-bottom:12px}
+    .footer-links{display:flex;gap:10px;flex-wrap:wrap;font-size:13px}
+    .footer-small{font-size:12px;color:#9fb4c8;margin-top:12px}
+    /* Reset */
+  
+    /* Mobile responsiveness */
+    @media(max-width:900px){
+      .brand{position:static;transform:none}
+      .topbar{justify-content:space-between}
+      .nav-left{display:none}
+      .mobile-nav-toggle{display:block}
+      .cards{grid-template-columns:1fr}
+      .about-section{flex-direction:column}
+      .about-image{width:100%}
+      .slider{height:220px}
+    }
+
+   
+  .whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  animation: bounce 2s infinite; /* 👈 bounce effect */
+}
+
+.whatsapp-float img {
+  width: 40px;
+  height: 40px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  background: #20b954;
+}
+
+/* 👇 Bounce keyframes */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+    /* simple hidden page sections */
+    section.page{display:none;padding:18px}
+    section.page.active{display:block}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* tiny helpers */
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700}
+  </style>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+    <!-- Topbar -->
+<header class="topbar">
+
+    <div class="logo-container">
+        <img src="images/logo.jpeg" alt="Logo" class="logo">
+        <div class="brand-text">
+        
+           <a href="index.html" style="text-decoration: none; color: inherit;">
+           
+            <h1 class="company-name">Saksham Biosurgical Services</h1>
+            <p class="tagline">Your Partner In Medical Excellence</p>
+            </a>
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="#about">About Us</a>
+        <div class="dropdown">
+        <a href="#products" class="dropbtn">Products</a>
+         <div class="dropdown-content">
+            <a href="#mgps">Medical Gas Pipeline Systems (MGPS)</a>
+            <a href="#critical-care">Critical Care Equipment</a>
+            <a href="#physiotherapy">Physiotherapy Equipment</a>
+            <a href="#ot-equipment">Operation Theatre Equipment</a>
+            <a href="#hospital-beds">Hospital Beds</a>
+            <a href="#refurbished">Refurbished Equipment</a>
+          </div>
+       </div>
+     
+        <a href="#network">Network</a>
+        <a href="#register">Register</a>
+        <a href="#career">Career</a>
+        <a href="#inquiry">Inquiry</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+</header>
+
+  <!-- Pages (single file) -->
+  <main>
+    <!-- Home / Hero -->
+    <section id="home" class="page active">
+      <div class="hero container">
+        <div class="slider" role="img" aria-label="Work images slideshow">
+          <!-- Replace these src paths with your 5 images (photo1..photo5) -->
+          <div class="slide"><img src="images/01.png" alt="Photo 1 - clinical"></div>
+          <div class="slide"><img src="images/02.png" alt="Photo 2 - production"></div>
+          <div class="slide"><img src="images/03.png" alt="Photo 3 - mgps plant"></div>
+          <div class="slide"><img src="images/04.png" alt="Photo 4 - doctor and patient"></div>
+          <div class="slide"><img src="images/05.png" alt="Photo 5 - equipment"></div>
+        </div>
+
+        <!-- three cards -->
+        <div class="cards" style="margin-top:20px">
+          <div class="card">
+            <h3>Products</h3>
+            <p class="muted">Write about your product categories, key machines, and top sellers here.</p>
+          </div>
+          <div class="card">
+            <h3>Our Network</h3>
+            <p class="muted">Summarize your geographic presence, distribution partners or hospitals you serve.</p>
+          </div>
+          <div class="card">
+            <h3>Contact Us</h3>
+            <p class="muted">List quick contact point, email, phone or a short enquiry form link.</p>
+          </div>
+        </div>
+
+        <!-- about brief two-col -->
+        <div class="about-section container" style="margin-top:18px">
+          <div class="about-text">
+            <h2>About Saksham Biosurgical Services</h2>
+            <p>Founded in 2021, Saksham Biosurgical Services is a trusted provider of high-quality hospital equipment and comprehensive healthcare solutions. 
+             We specialize in supplying and servicing a wide range of medical systems, including Medical Gas Pipeline Systems (MGPS), critical care equipment, physiotherapy devices, operation theatre (OT) setups, hospital beds, and more.
+
+We also offer refurbished medical equipment, ensuring cost-effective options without compromising on performance or safety. Our mission is to equip healthcare facilities with reliable, efficient, and advanced technology that supports better patient care.</p>
+
+            <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+              <div>
+                <strong>Corporate Office</strong><br>
+                <span class="muted">City, State, PIN</span>
+              </div>
+              <div>
+                <strong>Contact</strong><br>
+                <span class="muted">+91-7532040386 | sakshambiosurgicalservices@gmail.com</span>
+              </div>
+             
+            </div>
+          </div>
+          <div class="about-image">
+            <img src="images/08.png" alt="About image - replace images/about.jpg">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+<body>
+    <!-- Header White Section with Border -->
+    <section class="about-header">
+    </section>
+
+   <!-- Other pages (simple sections)    about us -->
+   
+    <section id="about" class="page">
+    <div class="about-section">
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>
+                Founded in 2021, <span class="highlight-company">Saksham Biosurgical Services</span> is a trusted provider of high-quality hospital equipment and comprehensive healthcare solutions. 
+                We specialize in supplying and servicing a wide range of medical systems, including Medical Gas Pipeline Systems (MGPS), critical care equipment, 
+                physiotherapy devices, operation theatre (OT) setups, hospital beds, and more.
+            </p>
+            <p>
+                We also offer refurbished medical equipment, ensuring cost-effective options without compromising on performance or safety. Our mission is to equip healthcare facilities with 
+                reliable, efficient, and advanced technology that supports better patient care.
+            </p>
+            <h3>Our Mission:</h3>
+            <p>
+                To provide reliable, efficient, and high-quality solutions that exceed client expectations while upholding the highest standards of safety and integrity.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="images/about.png" alt="About Saksham Biosurgical Services">
+        </div>
+    </div>
+</section>
+
+</body>     
+
+    <section id="products" class="page">
+  <div class="container">
+    <h1>Products</h1>
+
+    <div class="products-layout">
+       <!-- RIGHT: Product images -->
+      <div class="products-image">
+        <div class="product-gallery">
+          <img src="images/p1.jpg" alt="Product 1">
+          <img src="images/p2.jpg" alt="Product 2">
+          <img src="images/p3.jpg" alt="Product 3">
+          <img src="images/p4.jpg" alt="Product 4">
+          <img src="images/p5.jpg" alt="Product 5">
+          <img src="images/p6.jpg" alt="Product 6">
+          <img src="images/p7.jpg" alt="Product 7">
+          <img src="images/p8.jpg" alt="Product 8">
+          <img src="images/p9.jpg" alt="Product 9">
+          <img src="images/p10.jpg" alt="Product 10">
+          <img src="images/p11.jpg" alt="Product 11">
+          <img src="images/p12.jpg" alt="Product 12">
+        </div>
+      </div>
+
+     
+      <!-- LEFT: Product list -->
+      <div class="products-list">
+        <h3>Product Categories</h3>
+        <a href="#mgps">Medical Gas Pipeline Systems (MGPS)</a>
+        <a href="#critical-care">Critical Care Equipment</a>
+        <a href="#physiotherapy">Physiotherapy Equipment</a>
+        <a href="#ot-equipment">Operation Theatre Equipment</a>
+        <a href="#hospital-beds">Hospital Beds</a>
+        <a href="#refurbished">Refurbished Equipment</a>
+        <a href="product7.html">Patient Monitoring Systems</a>
+        <a href="product8.html">Surgical Lights</a>
+        <a href="product9.html">Ventilators</a>
+        <a href="product10.html">Anesthesia Machines</a>
+        <a href="product11.html">Infusion Pumps</a>
+        <a href="product12.html">Other Medical Equipment</a>
+      </div>
+
+     
+
+    </div>
+
+  </div>
+</section>
+  
+   <!-- MGPS Product Page -->
+<section id="mgps" class="page">
+  <div class="container mgps-section">
+    <!-- Left: Text -->
+    <div class="mgps-text">
+      <h1>Medical Gas Pipeline Systems (MGPS)</h1>
+      <p>
+        Saksham Biosurgical Services specializes in designing, installing, and maintaining 
+        <strong>Medical Gas Pipeline Systems (MGPS)</strong> for hospitals and healthcare facilities.  
+        Our MGPS solutions are built with precision, ensuring safe, reliable, and continuous 
+        supply of medical gases like Oxygen, Nitrous Oxide, Compressed Air, and Vacuum.  
+      </p>
+      <ul>
+        <li>Centralized Oxygen Supply Systems</li>
+        <li>Vacuum and Suction Units</li>
+        <li>Compressed Air & Nitrous Oxide Systems</li>
+        <li>Bed Head Panels & Gas Outlets</li>
+        <li>Alarm and Monitoring Systems</li>
+      </ul>
+      <p>
+        With expert engineering and a dedicated service team, we ensure every MGPS 
+        project meets <strong>international safety standards</strong> and provides reliable 
+        infrastructure for critical patient care.
+      </p>
+      <a href="#contact" class="btn">Enquire Now</a>
+      
+      <h3>Our Installation Includes:</h3>
+        <ul style="margin-left:20px; line-height:1.6; color:#444;">
+          <li>Take-offs &amp; Engineering</li>
+          <li>Medical Gas Piping Installation</li>
+          <li>Material &amp; Equipment Sourcing</li>
+          <li>Medical Gas Manifold Installation</li>
+          <li>Medical Vacuum Installation</li>
+          <li>Medical Air Compressor Installation</li>
+          <li>Alarm, Outlet, and Zone Valve Installation</li>
+        </ul>
+    </div>
+    <!-- Right: Image -->
+    <div class="mgps-image">
+      <img src="images/mgps.jpg" alt="Medical Gas Pipeline System">
+    </div>
+   </div>
+
+
+   <!-- NEW Section for OR Cards -->
+  <div class="container">
+    <h2>Operating Room Solutions</h2>
+    <div class="or-cards">
+      <div class="or-card">
+        <div class="icon"><i class="fa-solid fa-desktop"></i></div>
+        <h3>OR Construction</h3>
+        <p>We provide surgical booms, lighting, and medical gas installation all in one place. 
+        We work with facilities and engineers to design and construct operatory rooms that 
+        make use of the latest technologies and advancements in healthcare construction.</p>
+      </div>
+      <div class="or-card">
+        <div class="icon"><i class="fa-solid fa-hospital-user"></i></div>
+        <h3>Hybrid OR &amp; EP Rooms</h3>
+        <p>Get help designing and constructing your next Hybrid OR using the latest in imaging 
+        and operating room technologies. We provide surgical booms, lighting, and all medical 
+        gas and related construction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reliable Solution Section -->
+<section class="reliable-section">
+  <div class="container">
+    <div class="reliable-content">
+      <!-- Left Image -->
+      <div class="reliable-image">
+        <img src="images/mgps1.jpg" alt="Equipment sourcing image">
+      </div>
+
+      <!-- Right Text -->
+      <div class="reliable-text">
+       <h2 class="section-heading">Reliable solution for</h2>
+        <h1>Equipment Sourcing</h1>
+        <p>
+          Our specialty as a medical gas installation company gives us direct access to deeper discounts with top manufacturers. 
+          We work with engineers and contractors to procure equipment at rates lower than typical distribution channels and 
+          combine these discounts with our installation services. 
+          <br><br>
+          To speak with someone about equipment, call <strong>844-339-1110</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Client Cards -->
+    <div class="clients-grid">
+      <div class="client-card">Amico</div>
+      <div class="client-card">BeaconMedaes</div>
+      <div class="client-card">Medfloa</div>
+      <div class="client-card">Mediflow</div>
+      <div class="client-card">Laxair</div>
+      <div class="client-card">C-Flo</div>
+    </div>
+  </div>
+</section>
+
+ <!-- Installation Process Section -->
+<section class="installation-section">
+  <div class="installation-container">
+    <!-- Text content -->
+    <div class="installation-text">
+      <h2>OUR INSTALLATION PROCESS</h2>
+      <h3>How We Deliver Precision and Safety</h3>
+      <p>
+        Beginning with blueprints and system specs, our installers will review all documentation 
+        for code compliance, efficiency, and patient life safety concerns. If you do not have 
+        plans, we can engineer plans for you.
+      </p>
+      <p>
+        Once the engineering and take-off process is completed we begin sourcing your equipment, 
+        working with 12 different manufacturers to bring you the best wholesale pricing and lead 
+        times available.
+      </p>
+      <p>
+        Once the pricing and delivery of equipment has been established and approved, our 
+        superintendent will develop a site plan that lays out timelines and benchmarks for 
+        completion. Using this site plan we can work with you on scheduling details, such as 
+        start dates, completion dates, and shut downs.
+      </p>
+      <p>
+        <strong>Note:</strong> All medical gas installations will need to be verified by a third 
+        party medical gas verifier. In some cases we can arrange for this, but it will ultimately 
+        be the responsibility of the facility director to arrange the verification.
+      </p>
+      <p>
+        <strong>Note:</strong> Facility directors will be responsible for arranging the delivery 
+        of NF Nitrogen. Without this NF Nitrous Installers cannot properly install medical gas piping.
+      </p>
+    </div>
+
+    <!-- Right image -->
+    <div class="installation-image">
+      <img src="images/installation.jpg" alt="Installation Process">
+    </div>
+  </div>
+</section>
+
+ <!-- Piping Installation Section -->
+<section class="piping-section">
+  <div class="container piping-container">
+    
+    <!-- Left Side Image -->
+    <div class="piping-image">
+      <img src="images/piping.jpg" alt="Medical Gas Piping Installation">
+    </div>
+
+    <!-- Right Side Text -->
+    <div class="piping-text">
+      <h2>PIPING INSTALLATION</h2>
+      <div class="underline"></div> <!-- Blue underline -->
+      <h3>Medical Gas Piping Installation</h3>
+      <p>
+        Medical gas piping installations use a special type of copper piping used to deliver medical grade gases 
+        from a utility room to a patient room in a medical facility. The two approved types of medical grade piping 
+        are <strong>Type K</strong> and <strong>Type L</strong> copper pipe.
+      </p>
+      <p>
+        Type K copper has a thicker/heavier wall than Type L, but both meet <strong>NFPA 99 standards</strong> for 
+        positive pressure medical gas installations. Medical gas piping should come cleaned and capped from the 
+        manufacturer and be kept off of the floor and in a clean environment until it is ready to be installed. 
+        <a href="#">Learn more about medical copper tubing here.</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+</section>
+
+   <section id="critical-care" class="page">
+  <div class="container">
+    <h2>Critical Care Equipment</h2>
+    <p class="intro">
+      Explore our range of hospital-grade critical care equipment—from ventilators to monitors—designed for safety, precision, and best pricing. Equipment used in the ICU varies from the general, such as instruments to measure blood pressure, to very specialized devices, such as bedside monitors or ventilators. ICU equipment may be used to monitor the patient and/or help treat their illness. NET brand ICU Equipment have set new standards in intensive care. The ICU equipment we offer include Defibrillator, Patient Monitor, Ventilator, CPAP & BPAP systems etc.
+    </p>
+
+    <div class="equipment-grid">
+      <div class="equip-card">
+        <img src="images/ventilator.jpeg" alt="Ventilator">
+        <h3>Ventilators</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/PM.jpeg" alt="Patient Monitor">
+        <h3>Patient Monitors</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/def.jpeg" alt="Defibrillator">
+        <h3>Defibrillators</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/infusion.jpeg" alt="Infusion Pump">
+        <h3>Infusion Pumps</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/cpap.jpeg" alt="CPAP System">
+        <h3>CPAP System</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/BPAP.jpeg" alt="BPAP System">
+        <h3>BPAP System</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/syringe.png" alt="Syringe Pump">
+        <h3>Syringe Pumps</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/blood.jpeg" alt="Blood Warmer">
+        <h3>Blood Warmer</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/spiro.png" alt="Spirometer">
+        <h3>Spirometer</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="equip-card">
+        <img src="images/hem.png" alt="Hemodialysis Machine">
+        <h3>Hemodialysis Machine</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+     
+      <!-- Add more cards as needed... -->
+    </div>
+  </div>
+</section>
+
+<section id="physiotherapy" class="page">
+  <div class="container">
+    <h2>Physiotherapy Equipment</h2>
+    <div class="blue-underline"></div>
+    <p class="intro-text">
+      Saksham Biosurgical Services is leading manufacturer and suppliers of Physiotherapy Equipment, Physical Therapy Equipment and Physiotherapy Supplies. SBS brand Physiotherapy Equipment are used by patients and Physiotherapist all over the world with confidence.
+
+You may view our entire physiotherapy equipments range and select the most suitable model as per your requirements. Kindly provide us your specific purchase requirement along with quantity to provide CIF prices.
+    </p>
+
+    <div class="physio-grid">
+      <div class="physio-card">
+        <img src="images/electro.jpeg" alt="Traction Unit">
+        <h3>Electro Therapy Units</h3>
+        <p>Precise and adjustable for various therapy needs.</p>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="physio-card">
+        <img src="images/excer.jpeg" alt="Exercise Chair">
+        <h3>Exercise Equipments</h3>
+        <p>Optimized for ergonomic patient support.</p>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="physio-card">
+        <img src="images/leg.jpeg" alt="Tilt Table">
+        <h3>Tilt Tables</h3>
+        <p>Safe positioning with smooth control.</p>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="physio-card">
+        <img src="images/tr.jpeg" alt="Quadriceps Bench">
+        <h3>Shoulder,Arm and Hand Exercsise Equipments</h3>
+        <p>Perfect for strengthening rehabilitation.</p>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <!-- Add more equipment cards as needed -->
+    </div>
+  </div>
+</section>
+
+
+   <section id="ot-equipment" class="page">
+  <div class="container">
+    <h2>OT (Operation Theatre) Equipments</h2>
+    <div class="blue-underline"></div>
+    <p class="intro-text">
+Saksham Biosurgical Services offers a wide range for operation theatre & surgical equipment for hospitals and clinics, including OT lights, operating tables & ceiling pendants. We have combined all the equipment needed for an Operating Theatre into one easy section and you can navigate through all related categories from this page.
+    </p>
+
+    <div class="ot-grid">
+      <div class="ot-card">
+        <img src="images/seiling.jpeg" alt="Ceiling Pendants">
+        <h3>Ceiling Pendants</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="ot-card">
+        <img src="images/electrom.jpeg" alt="Electrosurgical unit">
+        <h3>Electrosurgical Unit</h3>
+        <a href="#" class="btn-sm">More...</a>
+     
+      </div>
+      <div class="ot-card">
+        <img src="images/ot light.jpeg" alt="OT Lights">
+        <h3>OT Lights</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <div class="ot-card">
+        <img src="images/ot table.jpeg" alt="OT Tables">
+        <h3>OT Tables</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+           <div class="ot-card">
+        <img src="images/ele.jpg" alt="OT premiums">
+        <h3>Premiums OT Series</h3>
+        <a href="#" class="btn-sm">More...</a>
+      </div>
+      <!-- Add more equipment cards as needed -->
+    </div>
+  </div>
+</section>
+
+   
+    <section id="network" class="page">
+       <div class="container">
+       <h2>Our Network</h2>
+    <p>
+      Saksham Biosurgical Services is proud to serve clients across <strong>Pan India</strong>.  
+      We have two key branches located in <strong>Noida</strong> and <strong>Delhi</strong>, 
+      providing fast and reliable support to hospitals and healthcare centers nationwide.
+    </p>
+        <h3>Our Branches</h3>
+          <ul>
+            <li><strong>Noida Office</strong></li>
+            <li><strong>Delhi Office</strong></li>
+          </ul>
+        <div class="network-layout">
+        <div class="network-map">
+         <img src="images/india-map.png"
+           alt="Network map"
+           style="width:800px !important; height:auto !important; display:block; border-radius:10px; object-fit:contain;">
+         </div> 
+         
+      
+      <!-- Left: Client Logos -->
+    
+
+      <!-- Right: India Map -->
+       <div class="products-list">
+        <h3>Product Categories</h3>
+        <a href="product1.html">Medical Gas Pipeline Systems (MGPS)</a>
+        <a href="product2.html">Critical Care Equipment</a>
+        <a href="product3.html">Physiotherapy Equipment</a>
+        <a href="product4.html">Operation Theatre Equipment</a>
+        <a href="product5.html">Hospital Beds</a>
+        <a href="product6.html">Refurbished Equipment</a>
+        <a href="product7.html">Patient Monitoring Systems</a>
+        <a href="product8.html">Surgical Lights</a>
+        <a href="product9.html">Ventilators</a>
+        <a href="product10.html">Anesthesia Machines</a>
+        <a href="product11.html">Infusion Pumps</a>
+        <a href="product12.html">Other Medical Equipment</a>
+      </div>
+      </div>
+         <div class="clients">
+        <h3>Our Major Clients</h3>
+        <div class="client-grid">
+          <div class="client-card">Max Hospitals</div>
+          <div class="client-card">Paras Hospitals</div>
+          <div class="client-card">Jaypee Golden Hospital</div>
+          <div class="client-card">Fortis Hospitals</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </section>
+
+    <section id="register" class="page">
+  <div class="container register-wrapper">
+    
+    <!-- Left side: Registration Form -->
+    <div class="register-form">
+      <h1>Register for Warranty</h1>
+      <form id="registerForm" action="https://formspree.io/f/mdkdqoev" method="POST">
+  <label>Name *</label>
+  <input type="text" name="name" required>
+
+  <label>Phone *</label>
+  <input type="tel" name="phone" required>
+
+  <label>Date of Purchase *</label>
+  <input type="date" name="purchaseDate" required>
+
+  <label>Purchase From *</label>
+  <input type="text" name="purchaseFrom" required>
+
+  <label>Product Name *</label>
+  <input type="text" name="productName" required>
+
+  <label>Serial No. *</label>
+  <input type="text" name="serialNo" required>
+
+  <label>Email *</label>
+  <input type="email" name="_replyto" required>
+
+  <label>Remarks *</label>
+  <textarea name="remarks" required></textarea>
+
+  <input type="hidden" name="_subject" value="New Warranty Registration">
+
+  <button type="submit">Submit</button>
+</form>
+
+    
+    <script>
+  const form = document.getElementById('registerForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      alert("✅ Thank you! Your warranty has been registered.");
+      form.reset();
+    } else {
+      alert("❌ Oops! Something went wrong. Try again.");
+    }
+  });
+</script>
+</div>
+     <div class="products-list">
+        <h3>Product Categories</h3>
+        <a href="product1.html">Medical Gas Pipeline Systems (MGPS)</a>
+        <a href="product2.html">Critical Care Equipment</a>
+        <a href="product3.html">Physiotherapy Equipment</a>
+        <a href="product4.html">Operation Theatre Equipment</a>
+        <a href="product5.html">Hospital Beds</a>
+        <a href="product6.html">Refurbished Equipment</a>
+        <a href="product7.html">Patient Monitoring Systems</a>
+        <a href="product8.html">Surgical Lights</a>
+        <a href="product9.html">Ventilators</a>
+        <a href="product10.html">Anesthesia Machines</a>
+        <a href="product11.html">Infusion Pumps</a>
+        <a href="product12.html">Other Medical Equipment</a>
+      </div>
+  </div>
+  </section>
+
+
+    <section id="career" class="page">
+  <div class="container career-section">
+    <!-- Left Text -->
+    <div class="career-text">
+      <h2>Careers at Saksham Biosurgical Services</h2>
+      <p>
+        At <strong>Saksham Biosurgical Services</strong>, we are always looking for 
+        passionate individuals to join our mission of delivering world-class 
+        medical equipment and healthcare solutions.
+      </p>
+      <p>
+        We offer opportunities in Sales, Service Engineering, Administration, 
+        and Operations. If you are dedicated and want to grow with us, we’d love to hear from you!
+      </p>
+      
+      <h3>Open Positions</h3>
+      <ul>
+        <li>Biomedical Service Engineer – Noida</li>
+        <li>Sales Executive – Delhi NCR</li>
+        <li>Office Coordinator – Delhi</li>
+      </ul>
+
+      <h3>Apply Now</h3>
+      <form id="careerForm" action="https://https://formspree.io/f/xgvzgeok" method="POST">
+        <label>Name *</label>
+        <input type="text" name="name" required>
+
+        <label>Email *</label>
+        <input type="email" name="_replyto" required>
+
+        <label>Phone *</label>
+        <input type="tel" name="phone" required>
+
+        <label>Position Applied For *</label>
+        <input type="text" name="position" required>
+
+        <label>Upload Resume (PDF/DOC)</label>
+        <input type="file" name="resume" accept=".pdf,.doc,.docx">
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+         
+   <div class="products-list">
+        <h3>Product Categories</h3>
+        <a href="product1.html">Medical Gas Pipeline Systems (MGPS)</a>
+        <a href="product2.html">Critical Care Equipment</a>
+        <a href="product3.html">Physiotherapy Equipment</a>
+        <a href="product4.html">Operation Theatre Equipment</a>
+        <a href="product5.html">Hospital Beds</a>
+        <a href="product6.html">Refurbished Equipment</a>
+        <a href="product7.html">Patient Monitoring Systems</a>
+        <a href="product8.html">Surgical Lights</a>
+        <a href="product9.html">Ventilators</a>
+        <a href="product10.html">Anesthesia Machines</a>
+        <a href="product11.html">Infusion Pumps</a>
+        <a href="product12.html">Other Medical Equipment</a>
+      </div>
+       <script>
+  const form = document.getElementById('registerForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      alert("✅ Thank you! Your application is submitted.");
+      form.reset();
+    } else {
+      alert("❌ Oops! Something went wrong. Try again.");
+    }
+  });
+</script>
+  </div>
+</section>
+
+
+    <section id="inquiry" class="page">
+  <div class="container inquiry-section">
+    <!-- Left Text + Form -->
+    <div class="inquiry-text">
+      <h2>Send Us Your Inquiry</h2>
+      <p>
+        Have a question about our products or services?  
+        Please fill out the form below and our team will get back to you shortly.
+      </p>
+
+      <!-- Success & Error Message -->
+      <div id="inquiryMessage" class="form-message"></div>
+
+      <form id="inquiryForm" action="https://formspree.io/f/xwpqgkvr" method="POST">
+        <label>Name *</label>
+        <input type="text" name="name" required>
+
+        <label>Email *</label>
+        <input type="email" name="_replyto" required>
+
+        <label>Phone *</label>
+        <input type="tel" name="phone" required>
+
+        <label>Subject *</label>
+        <input type="text" name="subject" required>
+
+        <label>Message *</label>
+        <textarea name="message" rows="5" required></textarea>
+
+        <button type="submit">Submit Inquiry</button>
+      </form>
+    </div>
+
+       <div class="products-list">
+        <h3>Product Categories</h3>
+        <a href="product1.html">Medical Gas Pipeline Systems (MGPS)</a>
+        <a href="product2.html">Critical Care Equipment</a>
+        <a href="product3.html">Physiotherapy Equipment</a>
+        <a href="product4.html">Operation Theatre Equipment</a>
+        <a href="product5.html">Hospital Beds</a>
+        <a href="product6.html">Refurbished Equipment</a>
+        <a href="product7.html">Patient Monitoring Systems</a>
+        <a href="product8.html">Surgical Lights</a>
+        <a href="product9.html">Ventilators</a>
+        <a href="product10.html">Anesthesia Machines</a>
+        <a href="product11.html">Infusion Pumps</a>
+        <a href="product12.html">Other Medical Equipment</a>
+      </div>
+
+    <!-- Right Image -->
+    
+  </div>
+</section>
+
+<script>
+  const inquiryForm = document.getElementById('inquiryForm');
+  const inquiryMessage = document.getElementById('inquiryMessage');
+
+  inquiryForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const response = await fetch(inquiryForm.action, {
+      method: inquiryForm.method,
+      body: new FormData(inquiryForm),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      inquiryMessage.textContent = "✅ Thank you! Your inquiry has been submitted successfully.";
+      inquiryMessage.className = "form-message success";
+      inquiryForm.reset();
+    } else {
+      inquiryMessage.textContent = "❌ Oops! Something went wrong. Please try again.";
+      inquiryMessage.className = "form-message error";
+    }
+  });
+</script>
+
+
+    <section id="contact" class="page">
+  <div class="container contact-section">
+    <!-- Left Side Info -->
+    <div class="contact-info">
+      <h2>Contact Us</h2>
+      <p>We’d love to hear from you! Please reach out using the details below:</p>
+      <ul>
+        <li><strong>Corporate Office:</strong> G/F, B-136, OMICRON-I, GREATER Noida, Uttar Pradesh-201308, India</li>
+        <li><strong>Phone:</strong> +91-9871994716</li>
+        <li><strong>Branch Office:</strong> F/F, BLOCK-C, GALI NO.-16, DAYALPUR Delhi-110094, India</li>
+        <li><strong>Phone:</strong> +91-7532040386</li>
+        <li><strong>Email:</strong> sakshambiosurgicalservices@gmail.com</li>
+        <li><strong>Office Hours:</strong> Mon - Sat, 9:00 AM - 6:00 PM</li>
+      </ul>
+    </div>
+
+    <!-- Right Side Form -->
+    <div class="contact-form">
+      <h3>Send us a message</h3>
+      <div id="contactMessage" class="form-message"></div>
+
+      <form id="contactForm" action="https://formspree.io/f/meozykrz" method="POST">
+        <label>Name *</label>
+        <input type="text" name="name" required>
+
+        <label>Email *</label>
+        <input type="email" name="_replyto" required>
+
+        <label>Phone *</label>
+        <input type="tel" name="phone" required>
+
+        <label>Message *</label>
+        <textarea name="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const contactForm = document.getElementById('contactForm');
+  const contactMessage = document.getElementById('contactMessage');
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const response = await fetch(contactForm.action, {
+      method: contactForm.method,
+      body: new FormData(contactForm),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      contactMessage.textContent = "✅ Thank you! Your message has been sent successfully.";
+      contactMessage.className = "form-message success";
+      contactForm.reset();
+    } else {
+      contactMessage.textContent = "❌ Oops! Something went wrong. Please try again.";
+      contactMessage.className = "form-message error";
+    }
+  });
+</script>
+
+
+  </main>
+
+  <footer>
+    <div class="footer-inner container">
+      <div class="footer-left">
+        <strong>Saksham Biosurgical Services</strong>
+        <div class="footer-col footer-small">&copy; <span id="year"></span> Saksham Biosurgical Services — All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#about" class="muted">About</a>
+          <a href="#products" class="muted">Products</a>
+          <a href="#network" class="muted">Network</a>
+          <a href="#register" class="muted">Register</a>
+          <a href="#career" class="muted">Career</a>
+          <a href="#inquiry" class="muted">Inquiry</a>
+          <a href="#contact" class="muted">Contact</a>
+        </div>
+      </div>
+      <div style="min-width:220px;text-align:right">
+        <div class="muted">Corporate office
+        G/F, B-136, OMICRON-I, GREATER Noida, 
+         Uttar Pradesh-201308, India </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Hash-based navigation to show different sections as separate pages
+    const pages = document.querySelectorAll('section.page');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function showPage(id){
+      pages.forEach(p=> p.classList.toggle('active', p.id===id));
+      navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('data-target')===id));
+    }
+
+    function handleHash(){
+      let id = location.hash.replace('#','') || 'home';
+      // if user clicked a nav link with id that equals 'contact' etc. keep it
+      const valid = Array.from(pages).map(p=>p.id);
+      if(!valid.includes(id)) id = 'home';
+      showPage(id);
+    }
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('load', handleHash);
+
+    // Make nav links update hash without full page reload
+    navLinks.forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const target = a.getAttribute('data-target')||'home';
+        location.hash = target;
+      })
+    })
+
+    // Accessibility: allow keyboard to move through slides (left/right)
+    let slideIndex = 0;
+    const totalSlides = 5; // change if you add/remove slides
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight'){
+        slideIndex = (slideIndex+1)%totalSlides; seekToSlide(slideIndex);
+      } else if(e.key === 'ArrowLeft'){
+        slideIndex = (slideIndex-1+totalSlides)%totalSlides; seekToSlide(slideIndex);
+      }
+    })
+    function seekToSlide(i){
+      // jump the animation by changing inline animationDelay on container slides
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((s, idx)=>{
+        // shift each slide's animation so the i-th slide becomes visible immediately
+        const offset = -i*5; // because each slide is delayed by 5s in CSS
+        s.style.animationDelay = (parseFloat(getComputedStyle(s).animationDelay) + offset) + 's';
+      })
+    }
+  </script>
+ <a href="https://wa.me/917532040386" class="whatsapp-float" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</body>
+</html>
